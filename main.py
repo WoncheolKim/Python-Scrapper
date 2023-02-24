@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from extractors.wwr import extract_wwr_jobs
 
 def get_page_count(keyword):
-  base_url = "https://kr.indeed.com/jobs?q="
+  base_url = "https://ca.indeed.com/jobs?q="
   response = get(f"{base_url}{keyword}")
   if response.status_code != 200:
     print("Can't request page")
@@ -13,9 +13,12 @@ def get_page_count(keyword):
     if pagination == None:
       return 1
     pages = pagination.find_all("li", recursive=False)
-    print(len(pages))
+    count = len(pages)
+    if count >= 5:
+      return 5
+    else:
+      return count
 
-get_page_count("python")
 
 def extract_indeed_jobs(keyword):
   base_url = "https//ca.indeed.com/jobs?q="
